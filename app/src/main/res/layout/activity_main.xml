@@ -33,7 +33,15 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <com.aicat.layout.library.scanner.ScannerCameraMask
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cm_topMargin="50dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
