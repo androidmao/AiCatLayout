@@ -1,6 +1,7 @@
 package com.aicat.layout.library.scanner;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import com.aicat.layout.library.R;
 
 
 /**
@@ -33,6 +36,7 @@ public class ScannerCameraMask extends CameraMask {
     private FrameLayout scannerBarContainer;
     private ImageView scannerBar;
 
+    private int startTranslationYDistance;
     private int translationYDistance;
 
     public ScannerCameraMask(@NonNull Context context) {
@@ -66,7 +70,7 @@ public class ScannerCameraMask extends CameraMask {
         //>>>
         scannerBar = new ImageView(context);
         scannerBar.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        scannerBar.setImageResource(com.aicat.layout.library.R.drawable.kit_scanner_bar);
+        scannerBar.setImageResource(R.drawable.image_scanner);
         scannerBarContainer.addView(scannerBar, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
@@ -81,6 +85,10 @@ public class ScannerCameraMask extends CameraMask {
         MarginLayoutParams scannerParams = (MarginLayoutParams) scannerBar.getLayoutParams();
         scannerParams.topMargin = -scannerBar.getMeasuredHeight();
         translationYDistance = getCameraLensRect().height() + scannerBar.getMeasuredHeight();
+
+        startTranslationYDistance = getTopMargin() - (scannerBar.getMeasuredHeight() / 2);
+        translationYDistance = getTopMargin() + (scannerBar.getMeasuredHeight() / 2);
+
     }
 
     public void setScannerBarImageResource(@DrawableRes int drawable) {
@@ -183,12 +191,14 @@ public class ScannerCameraMask extends CameraMask {
 
     ObjectAnimator animator;
 
+    @SuppressLint("WrongConstant")
     private void runAnimation() {
         if (animator == null) {
-            animator = ObjectAnimator.ofFloat(scannerBar, View.TRANSLATION_Y, 0, translationYDistance);
-            animator.setInterpolator(new LinearInterpolator());
-            animator.setDuration(2_000);
+            animator = ObjectAnimator.ofFloat(scannerBar, View.TRANSLATION_Y, startTranslationYDistance, translationYDistance);
+            animator.setInterpolator(new DecelerateInterpolator());
+            animator.setDuration(2500);
             animator.setRepeatCount(Animation.INFINITE);
+            animator.setRepeatMode(Animation.RESTART);
         }
         if (!animator.isStarted()) {
             animator.start();

@@ -39,8 +39,8 @@
     <com.aicat.layout.library.scanner.ScannerCameraMask
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cm_topMargin="50dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:cm_scannerBoxAngleColor="@color/colorScanner"
+        app:cm_topMargin="120dp" />
 
 
     <android.support.design.widget.FloatingActionButton
