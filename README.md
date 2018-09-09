@@ -1,5 +1,6 @@
 # Android仿支付宝扫码界面-AiCatLayout
 
+[![JitPack](https://img.shields.io/badge/%20JitPack%20-1.0-5bc0de.svg)](https://jitpack.io/#androidmao/AiCatLayout/1.0)
 
 ## 简介:
 
